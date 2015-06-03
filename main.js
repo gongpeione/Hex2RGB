@@ -8,6 +8,34 @@
 	sub.onclick        = getResult;
 	document.onkeydown = keyDownSearch;
 
+	var colorList = [];
+	if(window.localStorage) {
+		var local = window.localStorage;
+		for(var i = 0; i < local.length; i++) {
+			var localHex = local.key(i);
+			if(!/hex\(\w+\)/.test(localHex)) {
+				continue;
+			}
+			var localrgb = local.getItem(localHex);
+
+			console.log(localHex + '/' + localrgb + "\n");
+			colorList.push(localHex + '/' + localrgb);
+		}
+	}
+
+	colorHtml = '<div id="colorList" style="position: absolute;left:0;bottom:0;overflow: hidden;">';
+	for(var i = 0; i < colorList.length; i++) {
+		var colorHex = colorList[i].split('/')[0].replace("hex(", "#").replace(')', "");
+		var colorRgb = colorList[i].split('/')[1];
+		
+		colorHtml += '<span style="display:inline-block;height:20px;width:20px;background:' + colorHex + '"></span>';
+
+		console.log(colorHex + colorRgb);
+	}
+	colorHtml += '</div>';
+
+	body.innerHTML += colorHtml;
+
    	function getResult() {
 
 		var hexVal = hex.value.trim();
@@ -40,9 +68,15 @@
 
 				result    = 'rgb(' + result + ')'; 
 				rgb.value = result;
+
+				if(window.localStorage) {
+					var local = window.localStorage;
+					local.setItem('hex(' + hexVal + ')', result);
+				}
 				
 			} else if(rgbVal && rgbVal.match(/[Rr][Gg][Bb]\(\d+,\d+,\d+\)/)){
 
+				temp      = rgbVal;
 				rgbVal    = rgbVal.replace(/rgb/, '').replace(/\(/, '').replace(/\)/, '').split(',');
 				hex.value = '';
 
@@ -52,6 +86,11 @@
 
 				result    = '#' + rgbVal[0] + rgbVal[1] + rgbVal[2];
 				hex.value = result;
+
+				if(window.localStorage) {
+					var local = window.localStorage;
+					local.setItem('hex(' + result + ')', temp);
+				}
 				
 			} else {
 
@@ -64,7 +103,7 @@
 			}
 		}
 
-		console.log(hexVal + '-' + rgbVal + '-'  + result);
+		//console.log(hexVal + '-' + rgbVal + '-'  + result);
 		body.style.background = result;
 
 	};
