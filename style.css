@@ -100,6 +100,29 @@ input:focus {
 	color: #ddd;
 }
 
+#colorList {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+}
+#colorList span {
+	display: inline-block;
+	height: 10px;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-bottom: none;
+	transition: all 0.2s ease-in;
+	-moz-transition: all 0.2s ease-in;
+	-webkit-transition: all 0.2s ease-in;
+	-o-transition: all .2s  ease-in;
+}
+#colorList span:hover {
+	height: 40px;
+	border-color: rgba(0,0,0,.4);
+}
+
 @media (max-width: 768px) {
 	#wrap {
 		padding: 24% 0px;
