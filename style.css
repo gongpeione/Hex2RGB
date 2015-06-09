@@ -70,7 +70,7 @@ input {
 	display: block;
 	width: 40%;
 	margin: 0 auto;
-	margin-top: 20px;
+	margin-top: 30px;
 	padding: 10px 20px;
 	border: none;
 	background: transparent;
@@ -81,9 +81,20 @@ input {
 	text-align: center;
 	font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体" ,sans-serif !important;
 }
-input:focus {
+input:focus
+{ 	
 	border-bottom-color: rgba(255,255,255,.6);
 }
+input::-webkit-input-placeholder {
+	transition: all 0.2s ease-in-out;
+}
+input:focus::-webkit-input-placeholder {
+	color: rgba(255,255,255,.4);
+	font-size: .5em;
+	transform: translateY(-25px);
+    visibility: visible !important;  
+}
+
 
 #submit {
 	width: 40%;
